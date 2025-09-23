@@ -1,11 +1,10 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"id": "obsidian-money-manager",
+	"name": "Money Manager",
+	"version": "0.1.0",
+	"minAppVersion": "1.5.0",
+	"description": "A comprehensive personal finance manager for Obsidian. Track expenses, manage budgets, set goals, and gain deep insights into your financial life.",
+	"author": "Caio",
+	"authorUrl": "https://github.com/caio",
 	"isDesktopOnly": false
 }
