@@ -286,7 +286,7 @@ export class ReportView extends ItemView {
                                     label += ': ';
                                 }
                                 if (context.parsed !== null) {
-                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed);
+                                    label += new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'EUR' }).format(context.parsed);
                                 }
                                 return label;
                             }
@@ -354,7 +354,7 @@ export class ReportView extends ItemView {
                             label: function(context: TooltipItem<'bar'>) {
                                 let label = context.label || '';
                                 if (label) label += ': ';
-                                if (context.parsed.x !== null) label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.x);
+                                if (context.parsed.x !== null) label += new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'EUR' }).format(context.parsed.x);
                                 return label;
                             }
                         }
@@ -408,7 +408,7 @@ export class ReportView extends ItemView {
                                     label += ': ';
                                 }
                                 if (context.parsed.y !== null) {
-                                    label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(context.parsed.y);
+                                    label += new Intl.NumberFormat('en-EU', { style: 'currency', currency: 'EUR' }).format(context.parsed.y);
                                 }
                                 return label;
                             }

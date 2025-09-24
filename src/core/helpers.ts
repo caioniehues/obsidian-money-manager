@@ -2,32 +2,32 @@ import { CreditCard, Transaction } from './settings';
 declare const moment: any;
 
 /**
- * Converte uma string formatada como moeda (ex: "R$ 1.500,00") para um número.
- * @param value A string a ser convertida.
- * @returns O valor numérico.
+ * Converts a currency-formatted string (e.g., "€1,500.00") to a number.
+ * @param value The string to be converted.
+ * @returns The numeric value.
  */
 export function parseCurrency(value: string): number {
-	const sanitized = String(value).replace(/[R$\s.]/g, '').replace(',', '.');
+	const sanitized = String(value).replace(/[€\s,]/g, '');
 	return parseFloat(sanitized) || 0;
 }
 
 export function formatAsCurrency(value: number): string {
-    return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    return value.toLocaleString('en-EU', { style: 'currency', currency: 'EUR' });
 }
 
 export function calculateCardBill(card: CreditCard, allTransactions: Transaction[], currentMonth: moment.Moment): { total: number, dueDate: moment.Moment, transactions: Transaction[] } {
-    // A fatura de um mês contém todas as transações de cartão cuja data de vencimento está nesse mês.
-    // Esta é a fonte da verdade, usando a propriedade 'date' da transação.
+    // A month's bill contains all card transactions whose due date is in that month.
+    // This is the source of truth, using the transaction's 'date' property.
     const transactionsForBill = allTransactions.filter(t =>
         t.cardId === card.id &&
         moment(t.date).isSame(currentMonth, 'month')
     );
 
-    // O valor salvo na transação já é o da parcela, então apenas somamos.
+    // The value saved in the transaction is already the installment amount, so we just sum them.
     const billTotal = transactionsForBill.reduce((sum, t) => sum + t.amount, 0);
 
-    // A data de vencimento da fatura é o dia de vencimento do cartão no mês atual.
-    // Lógica de data à prova de falhas para evitar rolagem de mês (ex: dia 31 em Fevereiro).
+    // The bill due date is the card's due day in the current month.
+    // Failsafe date logic to prevent month rollover (e.g., day 31 in February).
     const targetMonth = currentMonth.clone();
     const daysInTargetMonth = targetMonth.daysInMonth();
     const dueDay = Math.min(card.dueDate, daysInTargetMonth);
@@ -41,55 +41,72 @@ export function calculateCardBill(card: CreditCard, allTransactions: Transaction
 }
 
 const categoryKeywords: { [keyword: string]: string } = {
-    // Moradia
-    'aluguel': 'Moradia',
-    'condominio': 'Moradia',
-    'iptu': 'Moradia',
-    'luz': 'Moradia',
-    'água': 'Moradia',
-    'gas': 'Moradia', // sem acento
-    'gás': 'Moradia', // com acento
-    'internet': 'Moradia',
-    'net': 'Moradia',
-    'claro': 'Moradia',
-    'vivo': 'Moradia',
-    'tim': 'Moradia',
-    
-    // Alimentação
-    'supermercado': 'Alimentação',
-    'mercado': 'Alimentação',
-    'ifood': 'Alimentação',
-    'rappi': 'Alimentação',
-    'restaurante': 'Alimentação',
-    'padaria': 'Alimentação',
+    // Housing
+    'rent': 'Housing',
+    'mortgage': 'Housing',
+    'utilities': 'Housing',
+    'electric': 'Housing',
+    'electricity': 'Housing',
+    'water': 'Housing',
+    'gas bill': 'Housing',
+    'internet': 'Housing',
+    'cable': 'Housing',
+    'property tax': 'Housing',
+    'hoa': 'Housing',
+    'maintenance': 'Housing',
 
-    // Transporte
-    'uber': 'Transporte',
-    '99': 'Transporte',
-    'gasolina': 'Transporte',
-    'posto': 'Transporte',
-    'ipiranga': 'Transporte',
-    'shell': 'Transporte',
-    'petrobras': 'Transporte',
-    'etanol': 'Transporte',
-    'estacionamento': 'Transporte',
+    // Food
+    'grocery': 'Food',
+    'supermarket': 'Food',
+    'restaurant': 'Food',
+    'food delivery': 'Food',
+    'doordash': 'Food',
+    'ubereats': 'Food',
+    'grubhub': 'Food',
+    'takeout': 'Food',
+    'dining': 'Food',
+    'cafe': 'Food',
+    'coffee': 'Food',
+    'bakery': 'Food',
 
-    // Lazer & Assinaturas
-    'netflix': 'Assinaturas',
-    'spotify': 'Assinaturas',
-    'disney+': 'Assinaturas',
-    'hbo': 'Assinaturas',
-    'prime video': 'Assinaturas',
-    'cinema': 'Lazer',
-    'show': 'Lazer',
+    // Transportation
+    'uber': 'Transportation',
+    'lyft': 'Transportation',
+    'taxi': 'Transportation',
+    'gas': 'Transportation',
+    'gasoline': 'Transportation',
+    'fuel': 'Transportation',
+    'parking': 'Transportation',
+    'toll': 'Transportation',
+    'bus': 'Transportation',
+    'subway': 'Transportation',
+    'train': 'Transportation',
+    'car payment': 'Transportation',
+    'insurance': 'Transportation',
 
-    // Saúde
-    'farmácia': 'Saúde',
-    'farmacia': 'Saúde',
-    'drogaria': 'Saúde',
-    'médico': 'Saúde',
-    'dentista': 'Saúde',
-    'plano de saúde': 'Saúde',
+    // Entertainment & Subscriptions
+    'netflix': 'Subscriptions',
+    'spotify': 'Subscriptions',
+    'disney+': 'Subscriptions',
+    'hbo': 'Subscriptions',
+    'prime video': 'Subscriptions',
+    'apple music': 'Subscriptions',
+    'youtube': 'Subscriptions',
+    'gym': 'Subscriptions',
+    'cinema': 'Entertainment',
+    'movie': 'Entertainment',
+    'theater': 'Entertainment',
+    'concert': 'Entertainment',
+    'show': 'Entertainment',
+
+    // Healthcare
+    'pharmacy': 'Healthcare',
+    'doctor': 'Healthcare',
+    'dentist': 'Healthcare',
+    'hospital': 'Healthcare',
+    'medical': 'Healthcare',
+    'health insurance': 'Healthcare',
+    'prescription': 'Healthcare',
 };
 
 export function suggestCategory(description: string, availableCategories: {id: string, name: string}[]): string | null {
@@ -99,7 +116,7 @@ export function suggestCategory(description: string, availableCategories: {id: s
     for (const keyword in categoryKeywords) {
         if (lowerCaseDescription.includes(keyword)) {
             const suggestedCategory = categoryKeywords[keyword];
-            // Verifica se a categoria sugerida realmente existe nas configurações do usuário
+            // Verifies that the suggested category actually exists in the user's settings
             if (availableCategoryNames.has(suggestedCategory)) {
                 return suggestedCategory;
             }

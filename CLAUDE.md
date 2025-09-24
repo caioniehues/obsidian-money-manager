@@ -72,10 +72,16 @@ main.ts
 4. **Achievements**: Checked after settings save, unlocked achievements stored in settings
 
 ### Internationalization
-- **Languages**: Portuguese (pt-br) and English (en)
-- **Translation System**: `src/i18n/lang.ts` with `t()` function
-- **Language Type**: Defined in `i18n/lang.ts`, re-exported from `types.ts`
-- **UI Update**: Language change requires Obsidian reload for full effect
+- **Language**: English only
+- **Translation System**: Simplified `src/i18n/lang.ts` with `t()` function (English-only)
+- **Language Type**: Fixed as 'en' in `i18n/lang.ts`, re-exported from `types.ts`
+- **Note**: Portuguese language support has been removed
+
+### Currency System
+- **Currency**: Euro (EUR)
+- **Format**: €1,500.00
+- **Locale**: en-EU
+- **Parser**: Handles Euro symbol (€) for input parsing
 
 ### Moment.js Usage
 Obsidian provides moment.js globally. Use `declare const moment: any;` instead of importing.

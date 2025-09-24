@@ -9,7 +9,7 @@ import { eventManager } from '../../core/event-manager';
 import { Transaction, CreditCard } from "../../core/settings";
 import { MONEY_MANAGER_VIEW_TYPE } from "../../constants";
 
-// Adiciona uma interface para evitar o uso de 'any' ao acessar as configurações
+// Adds an interface to avoid using 'any' when accessing settings
 interface AppWithSettings extends App {
     setting: {
         open: () => void;
@@ -19,7 +19,7 @@ interface AppWithSettings extends App {
 
 export class NexusHubView extends ItemView {
     plugin: MoneyManagerPlugin;
-    // Elementos do dashboard para atualização em tempo real
+    // Dashboard elements for real-time updates
     private generator: ReportGenerator;
     private receitaValueEl: HTMLElement;
     private despesasValueEl: HTMLElement;
@@ -59,9 +59,9 @@ export class NexusHubView extends ItemView {
             contentEl.empty();
             this.containerEl.addClass('nexus-hub-view');
 
-            // Adiciona o botão de engrenagem na barra de ações da view
+            // Adds the gear button to the view's action bar
             this.addAction(
-            'settings', // nome do ícone
+            'settings', // icon name
             t('SETTINGS_OPEN_TOOLTIP'), // texto do tooltip
             () => {
             (this.app as AppWithSettings).setting.open();
