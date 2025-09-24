@@ -73,9 +73,10 @@ main.ts
 
 ### Internationalization
 - **Language**: English only
-- **Translation System**: Simplified `src/i18n/lang.ts` with `t()` function (English-only)
+- **Translation System**: `src/i18n/lang.ts` with `t()` function (English-only)
 - **Language Type**: Fixed as 'en' in `i18n/lang.ts`, re-exported from `types.ts`
-- **Note**: Portuguese language support has been removed
+- **Migration**: Data version 3 automatically migrates legacy Portuguese ('pt-br') settings to English
+- **Note**: Portuguese language support has been removed; automatic fallback to English for any unsupported language values
 
 ### Currency System
 - **Currency**: Euro (EUR)

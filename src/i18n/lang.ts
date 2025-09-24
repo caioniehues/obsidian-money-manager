@@ -1,6 +1,9 @@
 export type Language = 'en';
 
-// Central object with all translations
+// Initialize language variable immediately with default value
+let language: Language = 'en';
+
+// Central object with all translations - initialized immediately
 const translations: Record<Language, Record<string, string>> = {
     'en': {
         'SETTINGS_HEADER': 'Money Manager Settings',
@@ -359,16 +362,20 @@ const translations: Record<Language, Record<string, string>> = {
     }
 };
 
-// Variable to store the current language, with 'en' as default
-let language: Language = 'en';
-
 /**
  * Define o idioma a ser usado pelo tradutor.
  * Chamado no 'onload' do plugin e ao alterar a configuração.
  * @param lang A linguagem definida nas configurações do plugin.
  */
-export function setLanguage(lang: Language) {
-    language = lang || 'en';
+export function setLanguage(lang: any) {
+    // Validate that the language is supported, fallback to 'en' otherwise
+    const supportedLanguages: Language[] = ['en'];
+    if (supportedLanguages.includes(lang)) {
+        language = lang as Language;
+    } else {
+        console.warn(`Unsupported language '${lang}' detected, falling back to English`);
+        language = 'en';
+    }
 }
 
 /**
@@ -378,13 +385,25 @@ export function setLanguage(lang: Language) {
  * @returns The translated string. If not found, returns the key itself.
  */
 export function t(key: string, vars?: Record<string, string | number>): string {
-    let text = translations[language]?.[key] || key;
+    // Ensure language is valid, fallback to 'en' if undefined
+    const currentLang = language || 'en';
 
+    // Get translation with fallback to key if not found
+    let text = translations[currentLang]?.[key];
+
+    // If translation not found, log warning and return key
+    if (!text) {
+        console.warn(`Translation key not found: ${key} for language: ${currentLang}`);
+        text = key;
+    }
+
+    // Replace variables if provided
     if (vars) {
         for (const varKey in vars) {
             const regex = new RegExp(`{${varKey}}`, 'g');
             text = text.replace(regex, String(vars[varKey]));
         }
     }
+
     return text;
 }

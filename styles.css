@@ -1005,3 +1005,364 @@
 .danger-zone .setting-item-description {
     color: var(--text-muted);
 }
+
+/* ============================================
+   Pattern Recognition UI Styles
+   ============================================ */
+
+
+/* Pattern Recognition UI Styles */
+
+/* Intelligence Panel in Transaction Modal */
+.intelligence-panel {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    min-height: 2rem;
+}
+
+/* Category Suggestions */
+.pattern-suggestion {
+    padding: 0.75rem;
+    background: var(--background-modifier-success);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    animation: slideIn 0.3s ease;
+}
+
+.main-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.suggestion-label {
+    font-weight: 600;
+    flex: 1;
+}
+
+.confidence {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.confidence.high {
+    background: var(--text-success);
+    color: var(--background-primary);
+}
+
+.confidence.medium {
+    background: var(--text-warning);
+    color: var(--background-primary);
+}
+
+.confidence.low {
+    background: var(--text-muted);
+    color: var(--background-primary);
+}
+
+.suggestion-apply-btn {
+    padding: 0.25rem 0.75rem;
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.suggestion-apply-btn:hover {
+    opacity: 0.9;
+}
+
+.suggestion-reasons {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--background-modifier-border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.reason {
+    margin: 0.25rem 0;
+}
+
+.alternative-suggestions {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.alt-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.alt-suggestion-btn {
+    padding: 0.2rem 0.5rem;
+    background: var(--background-modifier-border);
+    border: 1px solid var(--background-modifier-border-hover);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.alt-suggestion-btn:hover {
+    background: var(--background-modifier-border-hover);
+}
+
+/* Anomaly Warnings */
+.anomaly-warnings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.anomaly-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    animation: pulse 0.5s ease;
+}
+
+.anomaly-warning.high {
+    background: var(--background-modifier-error);
+    border: 1px solid var(--text-error);
+}
+
+.anomaly-warning.medium {
+    background: var(--background-modifier-warning);
+    border: 1px solid var(--text-warning);
+}
+
+.anomaly-warning.low {
+    background: var(--background-modifier-message);
+    border: 1px solid var(--text-accent);
+}
+
+.warning-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.warning-message {
+    flex: 1;
+    font-weight: 500;
+}
+
+.warning-details {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+/* Recurring Suggestion */
+.recurring-suggestion {
+    padding: 0.75rem;
+    background: var(--background-modifier-message);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: slideIn 0.3s ease;
+}
+
+.recurring-label {
+    flex: 1;
+    font-weight: 500;
+}
+
+.recurring-apply-btn {
+    padding: 0.25rem 0.75rem;
+    background: var(--interactive-accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.expected-amount,
+.next-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 2rem;
+}
+
+/* Dashboard Intelligence Panel */
+.dashboard-intelligence {
+    background: var(--background-secondary);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.intelligence-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.intelligence-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.intelligence-icon {
+    color: var(--text-accent);
+}
+
+.insights-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.insight-card {
+    background: var(--background-primary);
+    border-radius: 6px;
+    padding: 0.75rem;
+    border-left: 3px solid var(--interactive-accent);
+    transition: transform 0.2s;
+}
+
+.insight-card:hover {
+    transform: translateX(2px);
+}
+
+.insight-type {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.insight-message {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.insight-action {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    background: var(--background-modifier-border);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.insight-action:hover {
+    background: var(--background-modifier-border-hover);
+}
+
+/* Predictions List */
+.predictions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.prediction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    background: var(--background-primary);
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.prediction-date {
+    font-weight: 500;
+    color: var(--text-normal);
+}
+
+.prediction-description {
+    flex: 1;
+    margin: 0 1rem;
+    color: var(--text-muted);
+}
+
+.prediction-amount {
+    font-weight: 600;
+    color: var(--text-normal);
+}
+
+.prediction-confidence {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+/* Learning Progress Indicator */
+.learning-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--background-modifier-message);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    margin-top: 1rem;
+}
+
+.learning-icon {
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.learning-text {
+    color: var(--text-muted);
+}
+
+.learning-stats {
+    margin-left: auto;
+    font-weight: 500;
+    color: var(--text-normal);
+}

@@ -44,7 +44,7 @@ export const DEFAULT_CATEGORIES: Category[] = [
 
 export const DEFAULT_SETTINGS: MoneyManagerSettings = {
     language: 'en' as Language,
-    dataVersion: 2,
+    dataVersion: 3,
     onboardingComplete: false,
     userName: "",
     nexusScore: 0,
@@ -86,8 +86,10 @@ export class MoneyManagerSettingsTab extends PluginSettingTab {
             .addDropdown(dropdown => dropdown
                 .addOption('en', t('SETTINGS_LANGUAGE_EN'))
                 .setValue(this.plugin.settings.language)
-                .onChange(async (value: Language) => {
-                    this.plugin.settings.language = value;
+                .onChange(async (value: any) => {
+                    // Ensure we only save valid language values
+                    const validLanguages = ['en'];
+                    this.plugin.settings.language = validLanguages.includes(value) ? value : 'en';
                     // Here we call saveSettings, which will trigger achievements verification
                     await this.plugin.saveSettings();
                     setLanguage(value);
