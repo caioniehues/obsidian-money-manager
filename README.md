@@ -13,6 +13,7 @@ Money Manager transforms your Obsidian vault into a powerful, all-in-one financi
 - **📈 Detailed Reports:** Analyze your spending by category, visualize your cash flow, and watch your net worth evolve over time with beautiful, interactive charts.
 - **🔮 Future Projections:** See a 30-day projection of your balance based on upcoming recurring payments.
 - **🏆 Gamification:** Stay engaged with your finances by earning Nexus Score points and unlocking achievements for good financial habits.
+- **🎨 Modular CSS Layout (MCL):** Enhanced visual experience with customizable card layouts, animations, and responsive design patterns that seamlessly integrate with any Obsidian theme.
 
 ## 🚀 Getting Started
 
@@ -56,6 +57,22 @@ Money Manager transforms your Obsidian vault into a powerful, all-in-one financi
 
 Once installed, Money Manager will greet you with a quick onboarding process to set up your name and monthly income. After that, you're ready to explore!
 
+### Visual Customization (MCL)
+
+Money Manager includes Modular CSS Layout (MCL) enhancements that provide:
+
+- **Card Layouts:** Transform lists into beautiful card grids
+- **Enhanced Dashboard:** Professional grid layouts with hover effects
+- **Wide Reports:** Maximize screen space for charts and data
+- **Smooth Animations:** Subtle animations for better user experience
+
+To enable MCL features:
+1. Go to Settings → Money Manager → Layout Enhancements (MCL)
+2. Toggle "Enable MCL Enhancements"
+3. Customize individual features and dimensions to your preference
+
+All MCL features are optional and the plugin works perfectly without them enabled.
+
 ## 🛠 Development
 
 ```bash
@@ -68,6 +85,12 @@ npm run build
 # Lint code
 npm run lint
 ```
+
+### Developer Documentation
+
+- **[MCL Implementation Guide](MCL-IMPLEMENTATION-GUIDE.md):** Comprehensive guide for implementing Modular CSS Layout patterns in Obsidian plugins. Includes pattern library, TypeScript examples, and best practices.
+- **[CLAUDE.md](CLAUDE.md):** Instructions for AI-assisted development with Claude
+- **[AGENTS.md](AGENTS.md):** Architecture and agent-based development patterns
 
 ## 🤝 Contributing
 

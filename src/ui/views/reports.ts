@@ -60,7 +60,15 @@ export class ReportView extends ItemView {
     async onOpen() {
         const container = this.containerEl.children[1];
         container.empty();
-        container.addClass("nexus-report-container");
+
+        // Apply wide view if enabled
+        const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+        const wideReports = this.plugin.settings.mclSettings?.wideReports;
+        const containerClasses = wideReports && mclEnabled
+            ? 'nexus-report-container money-manager-wide-page'
+            : 'nexus-report-container';
+
+        container.className = containerClasses;
 
         container.createEl("h2", { text: t('REPORT_VIEW_TITLE') });
 
@@ -158,26 +166,35 @@ export class ReportView extends ItemView {
 
 
         // --- Chart Grid ---
-        const chartGrid = container.createDiv({ cls: 'chart-grid' });
+        const chartGridClasses = wideReports && mclEnabled
+            ? 'chart-grid mcl-enhanced'
+            : 'chart-grid';
+        const chartGrid = container.createDiv({ cls: chartGridClasses });
 
-        const pieChartContainer = chartGrid.createDiv({ cls: "chart-container" });
+        const chartContainerClasses = wideReports && mclEnabled
+            ? 'chart-container mcl-enhanced'
+            : 'chart-container';
+        const pieChartContainer = chartGrid.createDiv({ cls: chartContainerClasses });
         const pieChartHeader = pieChartContainer.createDiv({ cls: 'chart-header' });
         pieChartHeader.createEl('h3', { text: t('REPORT_VIEW_SPENDING_BY_CAT_TITLE') });
         pieChartContainer.createEl("canvas", { attr: { id: "category-pie-chart" } });
 
         // Add a wrapper to easily hide/show the bar chart during drilldown
         const barChartWrapper = chartGrid.createDiv({ attr: { id: 'bar-chart-wrapper' }});
-        const barChartContainer = barChartWrapper.createDiv({ cls: "chart-container" });
+        const barChartContainer = barChartWrapper.createDiv({ cls: chartContainerClasses });
         barChartContainer.createEl('h3', { text: t('REPORT_VIEW_INCOME_VS_EXPENSE_TITLE') });
         barChartContainer.createEl("canvas", { attr: { id: "monthly-flow-chart" } });
 
         // Sankey Chart Container
-        const sankeyChartContainer = chartGrid.createDiv({ cls: "chart-container full-width-chart" }); // Full width
+        const fullWidthChartClasses = wideReports && mclEnabled
+            ? 'chart-container full-width-chart mcl-enhanced'
+            : 'chart-container full-width-chart';
+        const sankeyChartContainer = chartGrid.createDiv({ cls: fullWidthChartClasses }); // Full width
         sankeyChartContainer.createEl('h3', { text: t('REPORT_VIEW_CASH_FLOW_TITLE') });
         sankeyChartContainer.createEl("canvas", { attr: { id: "sankey-flow-chart" } });
 
         // Net Worth Chart Container
-        const netWorthChartContainer = chartGrid.createDiv({ cls: "chart-container full-width-chart" }); // Full width
+        const netWorthChartContainer = chartGrid.createDiv({ cls: fullWidthChartClasses }); // Full width
         netWorthChartContainer.createEl('h3', { text: t('REPORT_VIEW_NET_WORTH_TITLE') });
         netWorthChartContainer.createEl("canvas", { attr: { id: "net-worth-chart" } });
 

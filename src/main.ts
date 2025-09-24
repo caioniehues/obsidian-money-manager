@@ -1,5 +1,5 @@
 import { Plugin } from 'obsidian';
-import { MoneyManagerSettings, DEFAULT_SETTINGS, MoneyManagerSettingsTab } from './core/settings';
+import { MoneyManagerSettings, DEFAULT_SETTINGS, MoneyManagerSettingsTab, DEFAULT_MCL_SETTINGS } from './core/settings';
 import { setLanguage } from './i18n/lang';
 import { registerCommands } from './commands';
 import { migrateData } from './core/data-migration';
@@ -22,6 +22,9 @@ export default class MoneyManagerPlugin extends Plugin {
 
             // Initialize language
             setLanguage(this.settings.language);
+
+            // Apply MCL CSS variables if enabled
+            this.applyMCLStyles();
 
             // Show onboarding if needed
             if (!this.settings.onboardingComplete) {
@@ -52,10 +55,16 @@ export default class MoneyManagerPlugin extends Plugin {
 
     async loadSettings() {
         this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+        // Ensure MCL settings are initialized
+        if (!this.settings.mclSettings) {
+            this.settings.mclSettings = DEFAULT_MCL_SETTINGS;
+        }
     }
 
     async saveSettings() {
         await this.saveData(this.settings);
+        // Apply MCL styles after settings change
+        this.applyMCLStyles();
         // Check for achievements after saving
         const result = checkAchievements(this.settings);
         // Achievement logic handled in checkAchievements
@@ -131,5 +140,35 @@ export default class MoneyManagerPlugin extends Plugin {
     async checkAndCompleteDebtGoal(transaction: any) {
         const implementation = await import('./core/goals-handler');
         await implementation.checkAndCompleteDebtGoal(this, transaction);
+    }
+
+    /**
+     * Apply MCL CSS variables based on user settings
+     */
+    private applyMCLStyles() {
+        if (!this.settings.mclSettings || !this.settings.mclSettings.enabled) {
+            // Remove all MCL CSS variables if disabled
+            const root = document.documentElement;
+            root.style.removeProperty('--mcl-card-min-width');
+            root.style.removeProperty('--mcl-card-gap');
+            root.style.removeProperty('--mcl-card-padding');
+            root.style.removeProperty('--mcl-card-radius');
+            root.style.removeProperty('--mcl-column-min-width');
+            root.style.removeProperty('--mcl-float-max-width');
+            root.style.removeProperty('--mcl-gallery-columns');
+            return;
+        }
+
+        const mcl = this.settings.mclSettings;
+        const root = document.documentElement;
+
+        // Apply CSS variables
+        root.style.setProperty('--mcl-card-min-width', `${mcl.cardMinWidth}px`);
+        root.style.setProperty('--mcl-card-gap', `${mcl.cardGap}px`);
+        root.style.setProperty('--mcl-card-padding', `${mcl.cardPadding}px`);
+        root.style.setProperty('--mcl-card-radius', `${mcl.cardRadius}px`);
+        root.style.setProperty('--mcl-column-min-width', `${mcl.columnMinWidth}px`);
+        root.style.setProperty('--mcl-float-max-width', `${mcl.floatMaxWidth}%`);
+        root.style.setProperty('--mcl-gallery-columns', `${mcl.galleryColumns}`);
     }
 }

@@ -1,0 +1,560 @@
+/* ============================================
+   Money Manager - Modular CSS Layout Integration
+   Adapted from Obsidian MCL for enhanced layouts
+   ============================================ */
+
+/* ===========================================
+   Multi-Column Callout Patterns
+   =========================================== */
+
+/* Standard Multi-Column Container */
+.money-manager-multi-column {
+    display: flex;
+    flex-flow: row wrap;
+    gap: var(--mcl-column-gap, 1rem);
+    margin: 1rem 0;
+}
+
+.money-manager-multi-column > * {
+    flex: 1 1 var(--mcl-column-min-width, 250px);
+    margin: 0;
+}
+
+/* Fixed Width Multi-Column Options */
+.money-manager-multi-column.center-fixed {
+    justify-content: center;
+}
+
+.money-manager-multi-column.center-fixed > * {
+    flex: 0 1 var(--mcl-column-fixed-width, 200px);
+}
+
+.money-manager-multi-column.left-fixed {
+    justify-content: flex-start;
+}
+
+.money-manager-multi-column.right-fixed {
+    justify-content: flex-end;
+}
+
+/* No-wrap Multi-Column */
+.money-manager-multi-column.no-wrap {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+/* Width Control for Sub-elements */
+.money-manager-multi-column > .wide-2 {
+    flex: 2 1 calc(var(--mcl-column-min-width, 250px) * 2);
+}
+
+.money-manager-multi-column > .wide-3 {
+    flex: 3 1 calc(var(--mcl-column-min-width, 250px) * 3);
+}
+
+.money-manager-multi-column > .min-0 {
+    min-width: 0;
+    flex-basis: auto;
+}
+
+/* ===========================================
+   List Card Patterns
+   =========================================== */
+
+/* List Card Container */
+.money-manager-list-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--mcl-card-min-width, 250px), 1fr));
+    gap: var(--mcl-card-gap, 1rem);
+    margin: 1rem 0;
+}
+
+.money-manager-list-card-wide {
+    grid-template-columns: repeat(auto-fill, minmax(var(--mcl-card-wide-width, 350px), 1fr));
+}
+
+/* Individual Card Styling */
+.money-manager-card {
+    background-color: var(--background-primary);
+    border: var(--mcl-card-border-width, 1px) solid var(--mcl-card-border-color, var(--background-modifier-border));
+    border-radius: var(--mcl-card-radius, 8px);
+    padding: var(--mcl-card-padding, 1rem);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.money-manager-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Header Styling */
+.money-manager-card h3:first-child,
+.money-manager-card h4:first-child {
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: var(--mcl-card-header-border, 1px solid var(--background-modifier-border));
+}
+
+/* ===========================================
+   List Grid Patterns
+   =========================================== */
+
+.money-manager-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--mcl-grid-min-width, 200px), 1fr));
+    gap: var(--mcl-grid-gap, 0.75rem);
+}
+
+.money-manager-list-grid-wide {
+    grid-template-columns: repeat(auto-fill, minmax(var(--mcl-grid-wide-width, 300px), 1fr));
+}
+
+/* Fixed Column Grids */
+.money-manager-two-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--mcl-grid-gap, 0.75rem);
+}
+
+.money-manager-three-column-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--mcl-grid-gap, 0.75rem);
+}
+
+/* ===========================================
+   Float Patterns
+   =========================================== */
+
+/* Float Callout */
+.money-manager-float-left {
+    float: left;
+    margin: 0 1rem 1rem 0;
+    max-width: var(--mcl-float-max-width, 40%);
+}
+
+.money-manager-float-right {
+    float: right;
+    margin: 0 0 1rem 1rem;
+    max-width: var(--mcl-float-max-width, 40%);
+}
+
+/* Fixed Width Float Options */
+.money-manager-float-left-small,
+.money-manager-float-right-small {
+    width: var(--mcl-float-small-width, 250px);
+}
+
+.money-manager-float-left-medium,
+.money-manager-float-right-medium {
+    width: var(--mcl-float-medium-width, 350px);
+}
+
+.money-manager-float-left-large,
+.money-manager-float-right-large {
+    width: var(--mcl-float-large-width, 450px);
+}
+
+/* Clear Float */
+.money-manager-clear-float {
+    clear: both;
+}
+
+/* ===========================================
+   Gallery Patterns
+   =========================================== */
+
+.money-manager-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mcl-gallery-gap, 0.5rem);
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.money-manager-gallery > * {
+    flex: 0 1 auto;
+    max-width: var(--mcl-gallery-item-max-width, 300px);
+    max-height: var(--mcl-gallery-item-max-height, 300px);
+    object-fit: cover;
+    border-radius: var(--mcl-gallery-item-radius, 4px);
+}
+
+/* Masonry-like Gallery */
+.money-manager-gallery-masonry {
+    columns: var(--mcl-gallery-columns, 3);
+    column-gap: var(--mcl-gallery-gap, 0.5rem);
+}
+
+.money-manager-gallery-masonry > * {
+    break-inside: avoid;
+    margin-bottom: var(--mcl-gallery-gap, 0.5rem);
+}
+
+/* ===========================================
+   Blank Container Pattern
+   =========================================== */
+
+.money-manager-blank-container {
+    /* Minimal styling for invisible container */
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.money-manager-blank-container.no-margin {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* ===========================================
+   Wide View Patterns
+   =========================================== */
+
+.money-manager-wide-page {
+    --file-line-width: 100%;
+    --file-margins: 0;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 2rem;
+}
+
+.money-manager-wide-table table {
+    width: 100%;
+    max-width: 100%;
+}
+
+.money-manager-wide-dataview .dataview {
+    max-width: 100%;
+}
+
+/* ===========================================
+   Enhanced Dashboard Patterns
+   =========================================== */
+
+/* Dashboard Grid with MCL Enhancement */
+.nexus-hub-grid-container.mcl-enhanced {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.3fr) 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        "header header"
+        "actions summary"
+        "actions main";
+    gap: var(--mcl-dashboard-gap, 1.5rem);
+    height: 100%;
+    padding: 1rem;
+}
+
+/* Stat Cards as MCL Cards */
+.stat-card-container.mcl-enhanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.stat-card.mcl-enhanced {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card.mcl-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--interactive-accent);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+}
+
+.stat-card.mcl-enhanced:hover::before {
+    transform: scaleX(1);
+}
+
+/* Transaction List as MCL List Cards */
+.accounts-list-container.mcl-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.nexus-hub-account-item.mcl-card {
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0;
+    background: var(--background-primary);
+    transition: all 0.2s;
+}
+
+.nexus-hub-account-item.mcl-card:hover {
+    border-color: var(--interactive-accent);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Budget Cards with MCL Enhancement */
+.budgets-container.mcl-enhanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+}
+
+.budget-card.mcl-enhanced {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.budget-card.mcl-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Progress Bars with MCL Style */
+.progress-bar-wrapper.mcl-enhanced {
+    height: 10px;
+    background: var(--background-secondary);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill.mcl-enhanced {
+    height: 100%;
+    background: linear-gradient(90deg, var(--interactive-accent), var(--interactive-accent-hover));
+    border-radius: 5px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar-fill.mcl-enhanced::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Navigation Items with MCL Enhancement */
+.nav-container.mcl-enhanced .nav-item {
+    border: 1px solid transparent;
+    transition: all 0.2s;
+}
+
+.nav-container.mcl-enhanced .nav-item:hover {
+    border-color: var(--background-modifier-border);
+    transform: translateX(4px);
+    background: var(--background-modifier-hover);
+}
+
+/* Goal Cards with MCL Pattern */
+.goals-list-container.mcl-enhanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.goal-card.mcl-enhanced {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.goal-card.mcl-enhanced:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Invoice Items as MCL Cards */
+.invoice-item.mcl-enhanced {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.invoice-item.mcl-enhanced:hover {
+    border-color: var(--interactive-accent);
+    background: var(--background-modifier-hover);
+    transform: translateX(4px);
+}
+
+/* Report Charts Grid */
+.chart-grid.mcl-enhanced {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chart-container.mcl-enhanced {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: all 0.2s;
+}
+
+.chart-container.mcl-enhanced:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================================
+   Responsive Design
+   =========================================== */
+
+@media (max-width: 768px) {
+    .nexus-hub-grid-container.mcl-enhanced {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "summary"
+            "actions"
+            "main";
+    }
+
+    .money-manager-multi-column {
+        flex-direction: column;
+    }
+
+    .money-manager-float-left,
+    .money-manager-float-right {
+        float: none;
+        max-width: 100%;
+        margin: 1rem 0;
+    }
+
+    .money-manager-two-column-grid,
+    .money-manager-three-column-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===========================================
+   Style Settings CSS Variables
+   =========================================== */
+
+body {
+    /* Column Settings */
+    --mcl-column-min-width: 250px;
+    --mcl-column-fixed-width: 200px;
+    --mcl-column-gap: 1rem;
+
+    /* Card Settings */
+    --mcl-card-min-width: 250px;
+    --mcl-card-wide-width: 350px;
+    --mcl-card-gap: 1rem;
+    --mcl-card-padding: 1rem;
+    --mcl-card-radius: 8px;
+    --mcl-card-border-width: 1px;
+    --mcl-card-border-color: var(--background-modifier-border);
+    --mcl-card-header-border: 1px solid var(--background-modifier-border);
+
+    /* Grid Settings */
+    --mcl-grid-min-width: 200px;
+    --mcl-grid-wide-width: 300px;
+    --mcl-grid-gap: 0.75rem;
+
+    /* Float Settings */
+    --mcl-float-max-width: 40%;
+    --mcl-float-small-width: 250px;
+    --mcl-float-medium-width: 350px;
+    --mcl-float-large-width: 450px;
+
+    /* Gallery Settings */
+    --mcl-gallery-gap: 0.5rem;
+    --mcl-gallery-columns: 3;
+    --mcl-gallery-item-max-width: 300px;
+    --mcl-gallery-item-max-height: 300px;
+    --mcl-gallery-item-radius: 4px;
+
+    /* Dashboard Settings */
+    --mcl-dashboard-gap: 1.5rem;
+}
+
+/* ===========================================
+   Animation Library
+   =========================================== */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.3s ease;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.3s ease;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}

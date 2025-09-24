@@ -69,7 +69,14 @@ export class NexusHubView extends ItemView {
             }
         );
 
-        const gridContainer = contentEl.createDiv({ cls: 'nexus-hub-grid-container' });
+        // Apply MCL enhancements if enabled
+        const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+        const dashboardEnhanced = this.plugin.settings.mclSettings?.dashboardEnhanced;
+
+        const gridContainerClasses = dashboardEnhanced && mclEnabled
+            ? 'nexus-hub-grid-container mcl-enhanced'
+            : 'nexus-hub-grid-container';
+        const gridContainer = contentEl.createDiv({ cls: gridContainerClasses });
 
         // --- AREA 1: CABEÇALHO ---
         const headerEl = gridContainer.createDiv({ cls: 'grid-area grid-header' });
@@ -109,27 +116,31 @@ export class NexusHubView extends ItemView {
         // --- AREA 2: RESUMO MENSAL ---
         const summaryEl = gridContainer.createDiv({ cls: 'grid-area grid-summary' });
         summaryEl.createEl('h2', { text: t('VIEW_MONTHLY_SUMMARY_TITLE') });
-        const summaryContainer = summaryEl.createDiv({ cls: 'stat-card-container' });
+        const statContainerClasses = dashboardEnhanced && mclEnabled
+            ? 'stat-card-container mcl-enhanced'
+            : 'stat-card-container';
+        const summaryContainer = summaryEl.createDiv({ cls: statContainerClasses });
         
-        const receitaCard = summaryContainer.createDiv({ cls: 'stat-card', attr: {'id': 'receita-total-card'} });
+        const cardClasses = dashboardEnhanced && mclEnabled ? 'stat-card mcl-enhanced' : 'stat-card';
+        const receitaCard = summaryContainer.createDiv({ cls: cardClasses, attr: {'id': 'receita-total-card'} });
         this.receitaValueEl = receitaCard.createDiv({ cls: "stat-value" });
         this.receitaValueEl.setText("R$ 0,00");
         const receitaLabel = receitaCard.createDiv({ cls: "stat-label" });
         receitaLabel.setText(t('VIEW_SUMMARY_CARD_REVENUE'));
         
-        const despesasCard = summaryContainer.createDiv({ cls: 'stat-card', attr: {'id': 'despesas-pendentes-card'} });
+        const despesasCard = summaryContainer.createDiv({ cls: cardClasses, attr: {'id': 'despesas-pendentes-card'} });
         this.despesasValueEl = despesasCard.createDiv({ cls: "stat-value" });
         this.despesasValueEl.setText("R$ 0,00");
         const despesasLabel = despesasCard.createDiv({ cls: "stat-label" });
         despesasLabel.setText(t('VIEW_SUMMARY_CARD_PENDING'));
         
-        const paidCard = summaryContainer.createDiv({ cls: 'stat-card', attr: {'id': 'pago-no-mes-card'} });
+        const paidCard = summaryContainer.createDiv({ cls: cardClasses, attr: {'id': 'pago-no-mes-card'} });
         this.saldoValueEl = paidCard.createDiv({ cls: "stat-value" });
         this.saldoValueEl.setText("R$ 0,00");
         const paidLabel = paidCard.createDiv({ cls: "stat-label" });
         paidLabel.setText(t('VIEW_SUMMARY_CARD_PAID'));
         
-        const monthlySurplusCard = summaryContainer.createDiv({ cls: 'stat-card', attr: {'id': 'saldo-projetado-card'} });
+        const monthlySurplusCard = summaryContainer.createDiv({ cls: cardClasses, attr: {'id': 'saldo-projetado-card'} });
         this.monthlySurplusEl = monthlySurplusCard.createDiv({ cls: "stat-value" });
         this.monthlySurplusEl.setText("R$ 0,00");
         const surplusLabel = monthlySurplusCard.createDiv({ cls: "stat-label" });
@@ -148,7 +159,10 @@ export class NexusHubView extends ItemView {
         actionsEl.createEl('hr');
     
         // Botões de navegação para os painéis
-        const navContainer = actionsEl.createDiv({ cls: 'nav-container' });
+        const navContainerClasses = dashboardEnhanced && mclEnabled
+            ? 'nav-container mcl-enhanced'
+            : 'nav-container';
+        const navContainer = actionsEl.createDiv({ cls: navContainerClasses });
         const budgetBtn = navContainer.createDiv({cls: 'nav-item'});
         setIcon(budgetBtn.createDiv({cls: 'nav-item-icon'}), 'target');
         budgetBtn.createDiv({cls: 'nav-item-label', text: t('VIEW_NAV_BUDGETS')});
@@ -191,7 +205,10 @@ export class NexusHubView extends ItemView {
 
         actionsEl.createEl('hr');
         actionsEl.createEl('h2', { text: t('VIEW_BUDGETS_TITLE') });
-        this.budgetContainer = actionsEl.createDiv({ cls: 'budgets-container' });
+        const budgetContainerClasses = this.plugin.settings.mclSettings?.budgetCardsEnhanced && mclEnabled
+            ? 'budgets-container mcl-enhanced'
+            : 'budgets-container';
+        this.budgetContainer = actionsEl.createDiv({ cls: budgetContainerClasses });
     
     
         // --- AREA 4: CONTEÚDO PRINCIPAL (CONTAS A PAGAR) ---
@@ -350,7 +367,12 @@ export class NexusHubView extends ItemView {
      * Busca as contas no array de settings e as renderiza na tela.
      */
     private renderTransactionItem(transaction: Transaction, container: HTMLElement) {
-        const itemEl = container.createDiv({ cls: "nexus-hub-account-item" });
+        const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+        const transactionCards = this.plugin.settings.mclSettings?.transactionCards;
+        const itemClasses = transactionCards && mclEnabled
+            ? 'nexus-hub-account-item mcl-card'
+            : 'nexus-hub-account-item';
+        const itemEl = container.createDiv({ cls: itemClasses });
         itemEl.toggleClass('is-paid', transaction.status === 'paid');
         
         const isPaused = transaction.pausedUntil && moment(transaction.pausedUntil).isSameOrAfter(moment(transaction.date), 'day');
@@ -457,7 +479,12 @@ export class NexusHubView extends ItemView {
     }
 
     private renderCardBillItem(card: CreditCard, bill: { total: number, dueDate: moment.Moment, transactions: Transaction[] }, container: HTMLElement) {
-        const itemEl = container.createDiv({ cls: "nexus-hub-account-item is-credit-card-invoice" });
+        const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+        const transactionCards = this.plugin.settings.mclSettings?.transactionCards;
+        const itemClasses = transactionCards && mclEnabled
+            ? 'nexus-hub-account-item is-credit-card-invoice mcl-card'
+            : 'nexus-hub-account-item is-credit-card-invoice';
+        const itemEl = container.createDiv({ cls: itemClasses });
     
         const leftPanel = itemEl.createDiv({ cls: 'account-left-panel' }); // Adiciona o checkbox aqui
 
@@ -530,7 +557,13 @@ export class NexusHubView extends ItemView {
         if (!mainEl) return;
 
         this.contentEl.querySelector('.accounts-list-container')?.remove();
-        const container = mainEl.createDiv({ cls: 'accounts-list-container' });
+
+        const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+        const transactionCards = this.plugin.settings.mclSettings?.transactionCards;
+        const containerClasses = transactionCards && mclEnabled
+            ? 'accounts-list-container mcl-cards'
+            : 'accounts-list-container';
+        const container = mainEl.createDiv({ cls: containerClasses });
         
         // 1. Renderiza transações normais (que não são de cartão de crédito)
         const transactionsForMonth = this.plugin.settings.transactions.filter(transaction => 
@@ -694,14 +727,25 @@ export class NexusHubView extends ItemView {
     
             const remainingAmount = budgetAmount - spentAmount;
 
-            const cardEl = this.budgetContainer.createDiv({ cls: 'budget-card' });
+            const mclEnabled = this.plugin.settings.mclSettings?.enabled;
+            const budgetEnhanced = this.plugin.settings.mclSettings?.budgetCardsEnhanced;
+            const cardClasses = budgetEnhanced && mclEnabled
+                ? 'budget-card mcl-enhanced'
+                : 'budget-card';
+            const cardEl = this.budgetContainer.createDiv({ cls: cardClasses });
 
             const headerEl = cardEl.createDiv({ cls: 'budget-card-header' });
             headerEl.createSpan({ text: category.name, cls: 'budget-category-name' });
             headerEl.createSpan({ text: `${Math.min(percentage, 100).toFixed(0)}%`, cls: 'budget-percentage' });
     
-            const progressBarWrapper = cardEl.createDiv({ cls: 'progress-bar-wrapper' });
-            const progressBarFill = progressBarWrapper.createDiv({ cls: 'progress-bar-fill' });
+            const progressWrapperClasses = budgetEnhanced && mclEnabled
+                ? 'progress-bar-wrapper mcl-enhanced'
+                : 'progress-bar-wrapper';
+            const progressFillClasses = budgetEnhanced && mclEnabled
+                ? 'progress-bar-fill mcl-enhanced'
+                : 'progress-bar-fill';
+            const progressBarWrapper = cardEl.createDiv({ cls: progressWrapperClasses });
+            const progressBarFill = progressBarWrapper.createDiv({ cls: progressFillClasses });
             progressBarFill.style.setProperty('--progress-percent', `${Math.min(percentage, 100)}%`);
     
             if (percentage > 100) progressBarFill.addClass('is-over-limit');

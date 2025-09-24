@@ -11,7 +11,8 @@ import {
     Budget,
     EmergencyFund,
     Category,
-    MoneyManagerSettings
+    MoneyManagerSettings,
+    MCLSettings
 } from '../types';
 
 // Re-export types for backward compatibility
@@ -23,7 +24,8 @@ export type {
     Budget,
     EmergencyFund,
     Category,
-    MoneyManagerSettings
+    MoneyManagerSettings,
+    MCLSettings
 };
 
 // --- DEFAULT SETTINGS ---
@@ -41,6 +43,21 @@ export const DEFAULT_CATEGORIES: Category[] = [
     { id: 'cat_income_1', name: 'Salary' },
     { id: 'cat_income_2', name: 'Extra Income' },
 ];
+
+export const DEFAULT_MCL_SETTINGS: MCLSettings = {
+    enabled: false,
+    columnMinWidth: 250,
+    cardMinWidth: 250,
+    cardGap: 16,
+    cardPadding: 16,
+    cardRadius: 8,
+    floatMaxWidth: 40,
+    galleryColumns: 3,
+    dashboardEnhanced: false,
+    transactionCards: false,
+    budgetCardsEnhanced: false,
+    wideReports: false
+};
 
 export const DEFAULT_SETTINGS: MoneyManagerSettings = {
     language: 'en' as Language,
@@ -62,6 +79,7 @@ export const DEFAULT_SETTINGS: MoneyManagerSettings = {
         history: []
     },
     notifiedTransactionIds: [],
+    mclSettings: DEFAULT_MCL_SETTINGS
 };
 
 // --- SETTINGS TAB ---
@@ -96,6 +114,112 @@ export class MoneyManagerSettingsTab extends PluginSettingTab {
                     eventManager.emit('data-changed'); // Triggers the main UI update
                     this.display(); // Redraws the settings screen
                 }));
+
+        // --- MCL ENHANCEMENT SETTINGS ---
+        containerEl.createEl('hr');
+        containerEl.createEl('h3', { text: 'Layout Enhancements (MCL)' });
+
+        if (!this.plugin.settings.mclSettings) {
+            this.plugin.settings.mclSettings = DEFAULT_MCL_SETTINGS;
+        }
+
+        new Setting(containerEl)
+            .setName('Enable MCL Enhancements')
+            .setDesc('Enable Modular CSS Layout enhancements for better visual organization')
+            .addToggle(toggle => toggle
+                .setValue(this.plugin.settings.mclSettings?.enabled ?? false)
+                .onChange(async (value) => {
+                    if (!this.plugin.settings.mclSettings) {
+                        this.plugin.settings.mclSettings = DEFAULT_MCL_SETTINGS;
+                    }
+                    this.plugin.settings.mclSettings.enabled = value;
+                    await this.plugin.saveSettings();
+                    eventManager.emit('data-changed');
+                }));
+
+        if (this.plugin.settings.mclSettings?.enabled) {
+            new Setting(containerEl)
+                .setName('Enhanced Dashboard')
+                .setDesc('Use enhanced grid layout for dashboard')
+                .addToggle(toggle => toggle
+                    .setValue(this.plugin.settings.mclSettings?.dashboardEnhanced ?? false)
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.dashboardEnhanced = value;
+                            await this.plugin.saveSettings();
+                            eventManager.emit('data-changed');
+                        }
+                    }));
+
+            new Setting(containerEl)
+                .setName('Transaction Cards')
+                .setDesc('Display transactions as cards instead of list items')
+                .addToggle(toggle => toggle
+                    .setValue(this.plugin.settings.mclSettings?.transactionCards ?? false)
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.transactionCards = value;
+                            await this.plugin.saveSettings();
+                            eventManager.emit('data-changed');
+                        }
+                    }));
+
+            new Setting(containerEl)
+                .setName('Enhanced Budget Cards')
+                .setDesc('Use enhanced visual style for budget cards')
+                .addToggle(toggle => toggle
+                    .setValue(this.plugin.settings.mclSettings?.budgetCardsEnhanced ?? false)
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.budgetCardsEnhanced = value;
+                            await this.plugin.saveSettings();
+                            eventManager.emit('data-changed');
+                        }
+                    }));
+
+            new Setting(containerEl)
+                .setName('Wide Reports View')
+                .setDesc('Use full width for reports and charts')
+                .addToggle(toggle => toggle
+                    .setValue(this.plugin.settings.mclSettings?.wideReports ?? false)
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.wideReports = value;
+                            await this.plugin.saveSettings();
+                            eventManager.emit('data-changed');
+                        }
+                    }));
+
+            new Setting(containerEl)
+                .setName('Card Minimum Width')
+                .setDesc('Minimum width for card layouts (pixels)')
+                .addSlider(slider => slider
+                    .setLimits(200, 400, 10)
+                    .setValue(this.plugin.settings.mclSettings?.cardMinWidth ?? 250)
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.cardMinWidth = value;
+                            document.body.style.setProperty('--mcl-card-min-width', `${value}px`);
+                            await this.plugin.saveSettings();
+                        }
+                    }));
+
+            new Setting(containerEl)
+                .setName('Card Gap')
+                .setDesc('Space between cards (pixels)')
+                .addSlider(slider => slider
+                    .setLimits(8, 32, 2)
+                    .setValue(this.plugin.settings.mclSettings?.cardGap ?? 16)
+                    .setDynamicTooltip()
+                    .onChange(async (value) => {
+                        if (this.plugin.settings.mclSettings) {
+                            this.plugin.settings.mclSettings.cardGap = value;
+                            document.body.style.setProperty('--mcl-card-gap', `${value}px`);
+                            await this.plugin.saveSettings();
+                        }
+                    }));
+        }
 
         // --- DANGER ZONE ---
         containerEl.createEl('hr');
